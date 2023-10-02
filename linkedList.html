@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked List</title>
+    <script>
+        class List {
+            constructor(data) {
+                this.head = {
+                    value: data,
+                    link: null
+                };
+                this.tail = this.head;
+            }
+            createNode() {
+                let value = document.getElementById("value").value;
+                let newNode = {
+                    value: value,
+                    link: null
+                };
+                this.tail.link = newNode;
+                this.tail = newNode;
+                this.traverseList();
+                document.getElementById("value").value = ""
+            }
+            traverseList() {
+                let tempNode = this.head;
+                let pera = document.getElementById("pera");
+                pera.innerHTML = "";
+                while (tempNode != null) {
+                    pera.append(tempNode.value + " => ");
+                    tempNode = tempNode.link;
+                }
+            }
+            deleteNode() {
+                let index = document.getElementById("index").value;
+                let tempNode = this.head;
+                if (index == 1) {
+                    this.head = this.head.link;
+                } else {
+                    while (index>2) {
+                        index--;
+                        tempNode = tempNode.link;
+                    }
+                    tempNode.link=tempNode.link.link;
+                }
+                this.traverseList();
+                document.getElementById("index").value="";
+            }
+            insertNode(){
+                let data = document.getElementById("data").value;
+                let index = document.getElementById("place").value;
+                let tempNode = this.head;
+                let newNode = {
+                    value: data,
+                    link: null
+                };
+                if (index == 1) {
+                    newNode.link = tempNode;
+                    this.head=newNode;
+                } else {
+                    while (index>2) {
+                        index--;
+                        tempNode = tempNode.link;
+                    }
+                    newNode.link=tempNode.link;
+                    tempNode.link=newNode;
+                    if(newNode.link==null){
+                        this.tail=newNode;
+                    }
+                }
+                this.traverseList();
+                document.getElementById("data").value="";
+                document.getElementById("place").value="";
+            }
+        }
+        let list = new List(100);
+        console.warn(list);
+    </script>
+</head>
+<body>
+    <div style="margin: auto; width: 300px;">
+        <h3>Linked List Data Structure</h3>
+        <h4>Head is 100</h4>
+        <!-- adding a node at the end of the linked list -->
+        <input type="text" id="value" placeholder="Value" style="margin-bottom: 20px;">
+        <button onclick="list.createNode()" style="display: block; margin-bottom: 20px;">Add Node</button>
+        <!-- Deleting a node from the linked list -->
+        <input type="text" id="index" placeholder="Index" style="margin-bottom: 20px;">
+        <button onclick="list.deleteNode()" style="display: block; margin-bottom: 20px;">Delete Node</button>
+        <!-- inserting a node in the linked list -->
+        <input type="text" id="data" placeholder="value" style="margin-bottom: 20px;">
+        <input type="text" id="place" placeholder="Index" style="margin-bottom: 20px;">
+        <button onclick="list.insertNode()" style="display: block; margin-bottom: 20px;">Insert Node</button>
+
+        <button onclick="list.traverseList()" style="display: block;margin-bottom: 20px;">Show Linked List</button>
+        <p id="pera"></p>
+    </div>
+</body>
+
+</html>
